@@ -1,0 +1,151 @@
+Realizar una calculadora utilizando HTML, CSS y JS, que incluya las operaciones de suma, resta, multiplicación y división. 
+
+Paso 1: Configuración básica del HTML y CSS
+
+Comencemos creando la estructura básica del HTML y aplicando estilos CSS utilizando Flexbox para crear el diseño de la calculadora. Aquí hay un punto de partida:
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="calculator">
+<div class="display">0</div>
+<div class="buttons">
+<!-- Botones de la calculadora -->
+</div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
+
+Paso 2: Estilos
+
+Crea un archivo styles.css y aplica los estilos CSS utilizando Flexbox para organizar los elementos de la calculadora. Puedes personalizar los estilos según tu gusto, pero aquí tienes un ejemplo simple:
+
+/* styles.css */
+body {
+font-family: Arial, sans-serif;
+background-color: #f0f0f0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+}
+
+.calculator {
+background-color: #333;
+border-radius: 8px;
+width: 300px;
+padding: 20px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.display {
+background-color: #444;
+color: white;
+font-size: 24px;
+width: 100%;
+padding: 10px;
+text-align: right;
+border: none;
+outline: none;
+margin-bottom: 10px;
+}
+
+.buttons {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 10px;
+}
+
+button {
+font-size: 18px;
+padding: 10px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+button:hover {
+background-color: #555;
+}
+
+Paso 3: Lógica de la calculadora con JavaScript
+
+Crea un archivo script.js, en el se implementará la lógica de la calculadora. Aquí tienes un ejemplo de cómo manejar los clics en los botones numéricos y de operación:
+
+// script.js
+const display = document.querySelector(".display");
+const buttons = document.querySelectorAll("button");
+
+let currentInput = "";
+let currentOperator = "";
+let shouldClearDisplay = false;
+
+buttons.forEach((button) => {
+button.addEventListener("click", () => {
+const buttonText = button.textContent;
+
+if (buttonText.match(/[0-9]/)) {
+if (shouldClearDisplay) {
+display.textContent = "";
+shouldClearDisplay = false;
+}
+display.textContent += buttonText;
+} else if (buttonText === "C") {
+display.textContent = "0";
+currentInput = "";
+currentOperator = "";
+} else if (buttonText === "=") {
+if (currentOperator && currentInput) {
+const result = calculate(parseFloat(currentInput), currentOperator, parseFloat(display.textContent));
+display.textContent = result;
+currentInput = result;
+currentOperator = "";
+shouldClearDisplay = true;
+}
+} else {
+currentOperator = buttonText;
+currentInput = display.textContent;
+shouldClearDisplay = true;
+}
+});
+});
+
+function calculate(num1, operator, num2) {
+switch (operator) {
+case "+":
+return num1 + num2;
+case "-":
+return num1 - num2;
+case "*":
+return num1 * num2;
+case "/":
+if (num2 !== 0) {
+return num1 / num2;
+} else {
+return "Error";
+}
+default:
+return num2;
+}
+}
+
+Actividades:
+
+Crea los botones en el archivo HTML y realiza las modificiaciones al archivo styles.css que consideres pertinentes
+Que hace document.querySelector(".display"); ?
+Que hace const buttons = document.querySelectorAll("button"); ?
+Que hace buttonText = button.textContent; ?
+Que hace y como funciona buttons.forEach((button) => { ...} ?
+Que hace y como funciona button.addEventListener("click", () => { } )
+Suba su proyecto a su contenedor de GIT HUB, en conteste los puntos del 2 al 6 en el archivo README.MD
